@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header">
+<ul class="nav justify-content-end">
+  <!--    <li class="nav-item">-->
+  <!--        <a class="nav-link active" aria-current="page" href="#">Active</a>-->
+  <!--    </li>-->
+  <!--    <li class="nav-item">-->
+  <!--        <a class="nav-link" href="#">Link</a>-->
+  <!--    </li>-->
+  <li class="nav-item">
+    <a class="nav-link" href="#" th:text="${username}">User </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cart" tabindex="-1" aria-disabled="true" th:text="'Items in Cart: ' + ${itemsInCart}">Disabled</a>
+  </li>
+</ul>
+
+<div class="jumbotron text-center">
+  <a href="/" style="text-decoration: none;">
+    <h1>
+      Codecool Shop
+    </h1>
+  </a>
+
+  <div>
+    <a  th:href="@{/registration}">Registration</a>
+  </div>
+  <div>
+    <a th:href="@{/login}">Log in</a>
+  </div>
+  <div>
+    <a th:href="@{/logout}">Log out</a>
+  </div>
+  <div>
+    <a th:href="@{/order-history}">Order History</a>
+  </div>
+
+</div>
+</header>
+
+
+</body>
+</html>
