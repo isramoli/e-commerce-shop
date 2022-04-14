@@ -3,11 +3,17 @@ package com.codecool.shop.model.payment;
 import com.codecool.shop.model.BaseModel;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-public abstract class Payment extends BaseModel implements PaymentMethod{
+public abstract class Payment extends BaseModel implements PaymentMethod {
     private boolean finished;
-    private BigDecimal amountToPay;
+    private final BigDecimal amountToPay;
+    private final int orderId;
+
+    public Payment(BigDecimal amountToPay, String methodName, int ordId) {
+        super(methodName);
+        this.orderId = ordId;
+        this.amountToPay = amountToPay;
+    }
 
     public BigDecimal getAmountToPay() {
         return amountToPay;
@@ -15,14 +21,6 @@ public abstract class Payment extends BaseModel implements PaymentMethod{
 
     public int getOrderId() {
         return orderId;
-    }
-
-    private int orderId;
-
-    public Payment(BigDecimal amountToPay, String methodName, int ordId) {
-        super(methodName);
-        this.orderId = ordId;
-        this.amountToPay = amountToPay;
     }
 
     public boolean isFinished() {

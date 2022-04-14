@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ProductCategoryDaoMem implements ProductCategoryDao {
 
-    private List<ProductCategory> data = new ArrayList<>();
     private static ProductCategoryDaoMem instance = null;
+    private final List<ProductCategory> data = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */

@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerDataDaoJdbc implements CustomerDataDao {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public CustomerDataDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -19,7 +19,7 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
 
     @Override
     public CustomerData getByName(String name) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT user_id, session_id, customer_name, customer_phone_number, customer_email, billing_address_id, shipping_address_id " +
                     "FROM customer_data  " +
                     "WHERE session_id=?";
@@ -37,7 +37,7 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
 
     @Override
     public void add(CustomerData customerData) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
 
 
             String sqlCountry = "INSERT INTO country (country_name) SELECT (?) " +
@@ -172,7 +172,7 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
     }
 
     private int getStreetId(String street) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT id FROM street WHERE street_name=?";
             PreparedStatement statementStreet = conn.prepareStatement(sqlCountry);
             statementStreet.setString(1, street);
@@ -191,14 +191,14 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
 
     @Override
     public CustomerData find(int id) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT user_id, session_id, customer_name, customer_phone_number, customer_email, billing_address_id, shipping_address_id " +
                     "FROM customer_data  " +
                     "WHERE user_id=?";
             PreparedStatement statement = conn.prepareStatement(sqlCountry);
             statement.setInt(1, id);
             ResultSet customer_data = statement.executeQuery();
-            if(customer_data.next()) {
+            if (customer_data.next()) {
                 CustomerData customer = new CustomerData(customer_data.getString("session_id"));
                 customer.setUserId(customer_data.getInt("user_id"));
                 return customer;
@@ -209,8 +209,8 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
         return null;
     }
 
-    private int getCountryId(String countryName){
-        try(Connection conn = dataSource.getConnection()){
+    private int getCountryId(String countryName) {
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT id FROM country WHERE country_name=?";
             PreparedStatement statementCountry = conn.prepareStatement(sqlCountry);
             statementCountry.setString(1, countryName);
@@ -223,7 +223,7 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
     }
 
     private int getZipCodeId(String zipCode) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT id FROM zip_code WHERE code=?";
             PreparedStatement statementZipCode = conn.prepareStatement(sqlCountry);
             statementZipCode.setString(1, zipCode);
@@ -236,7 +236,7 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
     }
 
     private int getCityId(int countryId, int zipCode, String cityName) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT id FROM city WHERE country_id=? AND zip_code_id=? AND city_name=?";
             PreparedStatement statementZipCode = conn.prepareStatement(sqlCountry);
             statementZipCode.setInt(1, countryId);
@@ -250,8 +250,8 @@ public class CustomerDataDaoJdbc implements CustomerDataDao {
         }
     }
 
-    private int getAddressId(int countryId, int zipCodeId, int cityId, int streetId){
-        try(Connection conn = dataSource.getConnection()){
+    private int getAddressId(int countryId, int zipCodeId, int cityId, int streetId) {
+        try (Connection conn = dataSource.getConnection()) {
             String sqlCountry = "SELECT id FROM address WHERE country_id=? AND zip_code_id=? AND city_id=? AND street_id=?";
             PreparedStatement statementZipCode = conn.prepareStatement(sqlCountry);
             statementZipCode.setInt(1, countryId);

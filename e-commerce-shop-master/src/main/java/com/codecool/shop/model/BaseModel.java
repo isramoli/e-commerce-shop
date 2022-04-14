@@ -55,7 +55,7 @@ public class BaseModel {
                     sb.append(field.getName() + ":" + value + ",");
                 }
             } catch (IllegalAccessException e) {
-
+                System.err.println(e);
             }
         }
         return sb.toString();

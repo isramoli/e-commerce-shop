@@ -36,13 +36,13 @@ public class ProductController extends BaseController {
         boolean categoryAndSupplierProvided = categoryProvided && supplierProvided;
 
         if (categoryAndSupplierProvided) {
-           products = productService.getProductsForCategoryOfSupplier(category_id, supplier_id);
-        }else if (categoryProvided) {
+            products = productService.getProductsForCategoryOfSupplier(category_id, supplier_id);
+        } else if (categoryProvided) {
             products = productService.getProductsForCategory(category_id);
-        }else if (supplierProvided) {
+        } else if (supplierProvided) {
             products = productService.getProductsForSupplier(supplier_id);
         }
-        Cart cart = cartDataStore.getNewestOfUser((int)req.getSession().getAttribute("user_id"));
+        Cart cart = cartDataStore.getNewestOfUser((int) req.getSession().getAttribute("user_id"));
         int totalInCart = cart.getTotalProductCount();
 
         setContextVariables(productCategoryDataStore, productService, context, category_id, products, suppliers, req.getSession().getId(), totalInCart, supplier_id);

@@ -1,10 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.payment.CreditCard;
 import com.codecool.shop.model.payment.PaymentMethod;
 import com.codecool.shop.model.payment.PaymentMethods;
-import com.codecool.shop.model.Order;
 import com.codecool.shop.service.OrderService;
 
 import javax.servlet.ServletException;
@@ -16,14 +16,15 @@ import java.math.BigDecimal;
 
 
 @WebServlet(urlPatterns = {"/payment"})
-public class PaymentController extends BaseController{
+public class PaymentController extends BaseController {
     int userId;
-    private OrderService orderService = new OrderService(cartDataStore, orderDataStore, customerDataStore);
+    private final OrderService orderService = new OrderService(cartDataStore, orderDataStore, customerDataStore);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setTemplateContext(req, resp);
         serviceSessionValidation(req);
-        userId = (int)req.getSession().getAttribute("user_id");
+        userId = (int) req.getSession().getAttribute("user_id");
         String currentSession = req.getSession().getId();
 
         setLoggedUsername(userId);
@@ -75,17 +76,17 @@ public class PaymentController extends BaseController{
         BigDecimal sumPrice = ord.getCustomerCart().getSumPrice();
 
         boolean paymentPossible = card.isPaymentPossible(sumPrice);
-        if(paymentPossible) card.decreaseFunds(sumPrice);
+        if (paymentPossible) card.decreaseFunds(sumPrice);
 
         orderDataStore.setPaymentStatus(ord, paymentPossible);
 
         // TODO MOVE FROM SESSION ID BASED PROCESSING TO SETTING ORDER ID IN SESSION
-            //redirect to main page
+        //redirect to main page
         req.getSession().setAttribute("processed_order", ord.getId());
         resp.sendRedirect(String.format("/order-summary?order_id=%s", ord.getId()));
     }
 
-    private void servicePayPalPayment(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+    private void servicePayPalPayment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
     }
 
@@ -102,7 +103,7 @@ public class PaymentController extends BaseController{
         }
     }
 
-    private String getPaymentMethodTemplate(String chosenMethod){
-        return chosenMethod != null ? "product/payments/" + chosenMethod +".html" : "product/payment.html";
+    private String getPaymentMethodTemplate(String chosenMethod) {
+        return chosenMethod != null ? "product/payments/" + chosenMethod + ".html" : "product/payment.html";
     }
 }

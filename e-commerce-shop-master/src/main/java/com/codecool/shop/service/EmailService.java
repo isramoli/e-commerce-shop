@@ -1,21 +1,14 @@
 package com.codecool.shop.service;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-
-
-public class EmailService implements MessageService{
+public class EmailService implements MessageService {
     @Override
     public void sendConfirmation(String orderNumber, String incomingMessage, String incomingEmail) throws MessagingException {
 
@@ -142,7 +135,6 @@ public class EmailService implements MessageService{
     }
 
 
-
     //===================================================
     private void java_gmail_attempt() {
         final String username = "darek200180@gmail.com";
@@ -193,7 +185,6 @@ public class EmailService implements MessageService{
         prop.put("mail.smtp.ssl.trust", "smtp.mailtrap.io");
 
 
-
         // creating session
         System.out.println("=== creating session success");
         String username = "darek200180@gmail.com";
@@ -204,7 +195,6 @@ public class EmailService implements MessageService{
                 return new PasswordAuthentication(username, password);
             }
         });
-
 
 
         // mimemessage for sending

@@ -7,21 +7,22 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
-    private DataSource ds;
+    private final DataSource ds;
+
     public UserDaoJdbc(DataSource ds) {
         this.ds = ds;
     }
 
     @Override
     public int createNewGuest() {
-        int nextId=getNextId();
+        int nextId = getNextId();
         add(String.format("guest%d", nextId), String.format("guest%d@cc_shop.pl", nextId), "");
         return nextId;
     }
 
     @Override
     public void add(String name, String email, String password) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "INSERT  INTO public.\"user\" (username, email, password_hash) SELECT ?,?,? " +
                     "WHERE NOT EXISTS (SELECT 1 FROM public.\"user\" WHERE username=?)";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -37,7 +38,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public User getUserByCredentials(String name, String password) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT id, username FROM public.\"user\" WHERE username=(?) AND password_hash=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, name);
@@ -55,7 +56,7 @@ public class UserDaoJdbc implements UserDao {
     }
 
     public Integer getUserIdByEmail(String email) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT id FROM public.\"user\" WHERE email=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
@@ -71,7 +72,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public User getById(int userId) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT id, username FROM public.\"user\" WHERE id=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, userId);
@@ -89,7 +90,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public boolean doesGivenEmailExists(String email) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT email FROM public.\"user\" WHERE email=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
@@ -104,21 +105,12 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public String getPasswordOfUser(String email) {
-        try(Connection conn = ds.getConnection()){
-            String sql = "SELECT password_hash FROM public.\"user\" WHERE email=(?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, email);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next());
-                return rs.getString(1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return email.concat("password");
     }
 
     @Override
     public boolean doesGivenUserExists(String username) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT username FROM public.\"user\" WHERE username=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, username);
@@ -131,20 +123,20 @@ public class UserDaoJdbc implements UserDao {
         }
     }
 
-    private int getNextId(){
-        try(Connection conn = ds.getConnection()){
+    private int getNextId() {
+        try (Connection conn = ds.getConnection()) {
             String sql = "SELECT MAX(id) as id FROM public.\"user\"";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            return rs.getInt("id")+1;
+            return rs.getInt("id") + 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void storeUserSessionInfo(int userId, String sessionToken, Timestamp expiration) {
-        try(Connection conn = ds.getConnection()){
+        try (Connection conn = ds.getConnection()) {
             String sql = "INSERT INTO user_session (user_id, session_expiration, session_token)" +
                     " VALUES (?, ?, ?) ";
             PreparedStatement statement = conn.prepareStatement(sql);

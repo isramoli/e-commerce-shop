@@ -1,8 +1,6 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.service.ConfigService;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -22,6 +20,17 @@ public class DatabaseManager {
     private SupplierDao supplierDao;
     private UserDao userDao;
 
+    public static DatabaseManager getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new DatabaseManager();
+            try {
+                INSTANCE.setup();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return INSTANCE;
+    }
 
     public void setup() throws SQLException, IOException {
         DataSource dataSource = connect();
@@ -52,19 +61,6 @@ public class DatabaseManager {
         System.out.println("Connection ok.");
 
         return dataSource;
-    }
-
-
-    public static DatabaseManager getINSTANCE() {
-        if (INSTANCE == null) {
-            INSTANCE = new DatabaseManager();
-            try {
-                INSTANCE.setup();
-            } catch (SQLException | IOException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return INSTANCE;
     }
 
     public CartDao getCartDao() {

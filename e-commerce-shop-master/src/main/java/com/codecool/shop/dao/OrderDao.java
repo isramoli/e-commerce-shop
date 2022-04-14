@@ -12,12 +12,20 @@ public interface OrderDao {
     String ID = "id";
     String PAYMENT_METHOD = "payment_method";
     String ORDER_STATUS_ID = "order_status_id";
+
     void add(Order order);
+
     void remove(int id);
+
     void setPaymentMethod(Order ord, String method);
+
     Order find(int id);
+
     Order getByName(String userName);
+
     Order getNewestOfUser(int userId);
+
     List<Order> getAllOrdersForSpecificUser(int user_id);
+
     void setPaymentStatus(Order ord, boolean paymentPossible);
 }

@@ -1,7 +1,6 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public SupplierDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -21,7 +20,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO supplier (name, description) VALUES (?, ?) ";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, supplier.getName());
@@ -38,7 +37,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public Supplier find(int id) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM supplier WHERE id=(?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
@@ -62,11 +61,11 @@ public class SupplierDaoJdbc implements SupplierDao {
     @Override
     public List<Supplier> getAll() {
         List<Supplier> suppliers = new ArrayList<>();
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM supplier";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Supplier supplier = new Supplier(rs.getString(2), rs.getString(3));
                 supplier.setId(rs.getInt(1));
                 suppliers.add(supplier);

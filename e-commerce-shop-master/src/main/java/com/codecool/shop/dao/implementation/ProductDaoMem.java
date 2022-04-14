@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class ProductDaoMem implements ProductDao {
 
-    private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
+    private final List<Product> data = new ArrayList<>();
 
     /* A private Constructor prevents any other class from instantiating.
      */

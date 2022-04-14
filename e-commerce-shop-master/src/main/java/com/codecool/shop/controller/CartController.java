@@ -30,7 +30,7 @@ public class CartController extends BaseController {
         int quantity = Integer.parseInt(req.getParameter("quantity"));
         int user_id = (int) req.getSession().getAttribute("user_id");
 
-        cartDataStore.addProduct(cartDataStore.getNewestOfUser(user_id), productDataStore.find(productId), quantity );
+        cartDataStore.addProduct(cartDataStore.getNewestOfUser(user_id), productDataStore.find(productId), quantity);
 
         //redirect to main page
         String referrer = req.getHeader("referer");

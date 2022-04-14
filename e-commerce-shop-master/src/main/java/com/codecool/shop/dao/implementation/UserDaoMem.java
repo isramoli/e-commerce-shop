@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoMem implements UserDao {
-    private List<User> users = new ArrayList<>();
     private static UserDaoMem INSTANCE;
+    private final List<User> users = new ArrayList<>();
 
     public static UserDao getInstance() {
         if (INSTANCE == null) {
@@ -20,7 +20,7 @@ public class UserDaoMem implements UserDao {
 
     @Override
     public int createNewGuest() {
-        int nextId = users.size()+1;
+        int nextId = users.size() + 1;
         add(String.format("guest%d", nextId), "abx@abc", "");
         return nextId;
     }

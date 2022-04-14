@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CartDaoMem implements CartDao {
-    private final List<Cart> data = new ArrayList<>();
     private static CartDaoMem instance = null;
+    private final List<Cart> data = new ArrayList<>();
 
     private CartDaoMem() {
     }

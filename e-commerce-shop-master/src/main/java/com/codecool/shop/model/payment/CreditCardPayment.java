@@ -2,7 +2,7 @@ package com.codecool.shop.model.payment;
 
 import java.math.BigDecimal;
 
-public class CreditCardPayment extends Payment{
+public class CreditCardPayment extends Payment {
     private CreditCard card;
 
 

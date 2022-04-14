@@ -19,15 +19,10 @@ public class ModifyCartController extends BaseController {
         setTemplateContext(req, resp);
         serviceSessionValidation(req);
 
-        try {
-            JSONObject jsonParameters = readJSONParameters(req);
-            String prodId = jsonParameters.getString("prodId");
-            String quantity = jsonParameters.getString("newQuantity");
-            System.out.println(prodId + " " + quantity);
-            updateCart(prodId, quantity, req);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String prodId = "jsonParameters.getString()";
+        String quantity = "jsonParameters.getString()";
+        System.out.println(prodId + " " + quantity);
+        updateCart(prodId, quantity, req);
 
     }
 
@@ -39,7 +34,7 @@ public class ModifyCartController extends BaseController {
 
         JSONObject parameters = null;
 
-        if(br != null){
+        if (br != null) {
             json = br.readLine();
             parameters = new JSONObject(json);
         }

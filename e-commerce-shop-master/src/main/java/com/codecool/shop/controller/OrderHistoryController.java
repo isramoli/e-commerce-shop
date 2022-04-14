@@ -1,12 +1,7 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.service.CSVFileService;
-import com.codecool.shop.service.EmailService;
-import com.codecool.shop.service.JSONService;
 
-import javax.mail.MessagingException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
