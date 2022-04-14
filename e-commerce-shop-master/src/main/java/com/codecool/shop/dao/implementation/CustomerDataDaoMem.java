@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDataDaoMem implements CustomerDataDao {
-    private List<CustomerData> data = new ArrayList<>();
     private static CustomerDataDao instance = null;
+    private final List<CustomerData> data = new ArrayList<>();
 
     private CustomerDataDaoMem() {
     }
 
     public static CustomerDataDao getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new CustomerDataDaoMem();
         }
         return instance;

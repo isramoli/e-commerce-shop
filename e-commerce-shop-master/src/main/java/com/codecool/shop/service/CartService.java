@@ -2,13 +2,12 @@ package com.codecool.shop.service;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.jdbc.CartDaoJdbc;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 
 public class CartService {
-    private CartDao cartDao;
-    private ProductDao productDao;
+    private final CartDao cartDao;
+    private final ProductDao productDao;
 
     public CartService(CartDao cartDao, ProductDao productDao) {
         this.cartDao = cartDao;

@@ -3,7 +3,7 @@ package com.codecool.shop.model.payment;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class TransferPayment extends Payment{
+public class TransferPayment extends Payment {
     private final String transferTitle;
     private final String companyAccountNumber = "123412341234123412341234";
     private final String companyName = "Codecool Sp. z o.o.";
@@ -19,7 +19,7 @@ public class TransferPayment extends Payment{
     }
 
 
-    public String getTitleForTransfer(){
+    public String getTitleForTransfer() {
         return transferTitle;
     }
 

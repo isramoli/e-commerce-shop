@@ -6,13 +6,13 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigService {
+    private final String propFileName = "connection.properties";
+    InputStream inputStream;
     private String daoType;
     private String databaseUrl;
     private String databaseName;
     private String databaseUser;
     private String databasePassword;
-    private final String propFileName = "connection.properties";
-    InputStream inputStream;
 
     public String getDaoType() throws IOException {
         try {

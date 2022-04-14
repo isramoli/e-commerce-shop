@@ -1,12 +1,12 @@
 package com.codecool.shop.service;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Timestamp;
 import java.util.Base64;
-
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 public class PasswordService {
@@ -29,7 +29,7 @@ public class PasswordService {
         return pw_hash;
     }
 
-    public boolean passwordMatches(String password, String hashedPassword){
+    public boolean passwordMatches(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
@@ -39,7 +39,7 @@ public class PasswordService {
         return Base64.getEncoder().encodeToString(randomBytes);
     }
 
-    public Timestamp getExpirationDate(){
+    public Timestamp getExpirationDate() {
         long timeNow = new java.util.Date().getTime();
 
         return new Timestamp(timeNow + defaultExpiration);

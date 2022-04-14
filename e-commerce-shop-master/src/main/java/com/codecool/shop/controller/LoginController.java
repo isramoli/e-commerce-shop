@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.Order;
 import com.codecool.shop.service.PasswordService;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +10,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 @WebServlet(urlPatterns = {"/login"})
-public class LoginController extends BaseController{
-    private PasswordService ps = new PasswordService();
-
+public class LoginController extends BaseController {
     private final String ERROR_MSG = "error_message";
     private final String SUCCESS_MSG = "success_message";
+    private final PasswordService ps = new PasswordService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -61,7 +59,7 @@ public class LoginController extends BaseController{
         }
     }
 
-    private void setSession(HttpServletRequest request, String email){
+    private void setSession(HttpServletRequest request, String email) {
         String token = ps.generateToken();
         System.out.println("TOKEN: " + token);
         int userId = userDataStore.getUserIdByEmail(email);
@@ -88,7 +86,7 @@ public class LoginController extends BaseController{
         context.setVariable(SUCCESS_MSG, successMessage);
     }
 
-    private void setNewCartIfOldAreFinished(int userId){
+    private void setNewCartIfOldAreFinished(int userId) {
         Cart cart = cartDataStore.getNewestOfUser(userId);
         if (cart == null) {
             setNewCart(userId);

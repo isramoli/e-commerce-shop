@@ -9,7 +9,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class OrderDaoMem implements OrderDao {
-    private List<Order> data = new ArrayList<>();
+    private static OrderDaoMem instance = null;
+    private final List<Order> data = new ArrayList<>();
+
+    private OrderDaoMem() {
+    }
+
+    public static OrderDaoMem getInstance() {
+        if (instance == null) {
+            instance = new OrderDaoMem();
+        }
+        return instance;
+    }
 
     @Override
     public Order getNewestOfUser(int userId) {
@@ -28,19 +39,6 @@ public class OrderDaoMem implements OrderDao {
     @Override
     public void setPaymentStatus(Order ord, boolean paymentPossible) {
         ord.setPaymentSuccessfull(paymentPossible);
-    }
-
-    private static OrderDaoMem instance = null;
-
-    private OrderDaoMem() {
-    }
-
-
-    public static OrderDaoMem getInstance() {
-        if (instance == null) {
-            instance = new OrderDaoMem();
-        }
-        return instance;
     }
 
     @Override

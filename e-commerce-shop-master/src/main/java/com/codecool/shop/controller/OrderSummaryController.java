@@ -37,9 +37,9 @@ public class OrderSummaryController extends BaseController {
         jsonService = new JSONService();
         csvFileService = new CSVFileService();
 
-        if(order == null) {
+        if (order == null) {
             sendErrorOrder(resp, req);
-        }else if(!order.isPaymentSuccessfull()) {
+        } else if (!order.isPaymentSuccessfull()) {
             try {
                 sendFailedOrder(resp, req);
             } catch (MessagingException e) {
@@ -105,7 +105,7 @@ public class OrderSummaryController extends BaseController {
         context.setVariable("status", status);
         context.setVariable("itemsInCart",
                 cartDataStore
-                        .getNewestOfUser((int)req.getSession().getAttribute("user_id"))
+                        .getNewestOfUser((int) req.getSession().getAttribute("user_id"))
                         .getTotalProductCount());
         context.setVariable("message", message);
         context.setVariable("orderNumber", orderNumber);

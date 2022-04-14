@@ -8,9 +8,9 @@ import com.codecool.shop.model.CustomerData;
 import com.codecool.shop.model.Order;
 
 public class OrderService {
-    private CartDao cartDao;
-    private OrderDao orderDao;
-    private CustomerDataDao customerDao;
+    private final CartDao cartDao;
+    private final OrderDao orderDao;
+    private final CustomerDataDao customerDao;
 
     public OrderService(CartDao cartDao, OrderDao orderDao, CustomerDataDao customerDao) {
         this.cartDao = cartDao;
@@ -18,16 +18,16 @@ public class OrderService {
         this.customerDao = customerDao;
     }
 
-    public boolean hasNotPendingOrder(int userId){ // TODO change for userId/orderId
+    public boolean hasNotPendingOrder(int userId) { // TODO change for userId/orderId
         try {
             Order newestOrder = orderDao.getNewestOfUser(userId);
             return newestOrder.getPayment() != null && newestOrder.isPaymentSuccessfull() != false;
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return true;
         }
     }
 
-    public void setFreshOrderForUser(int userId){ // TODO change for userId
+    public void setFreshOrderForUser(int userId) { // TODO change for userId
         CustomerData customerData = customerDao.find(userId);
         Cart currentCart = cartDao.getNewestOfUser(userId);
 

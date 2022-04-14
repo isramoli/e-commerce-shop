@@ -10,7 +10,7 @@ public class Order extends BaseModel {
 
     private boolean isPaymentSuccessfull;
     private PaymentMethod payment;
-    private Cart customerCart;
+    private final Cart customerCart;
     private CustomerData customerData;
     private Date dateTime;
 
@@ -30,13 +30,14 @@ public class Order extends BaseModel {
     }
 
 
-    public int getUserId(){
+    public int getUserId() {
         return customerData.getUserId();
     }
+
     public boolean isPaymentSuccessfull() {
         try {
             return payment.isFinished();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return false;
         }
     }

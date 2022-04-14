@@ -48,7 +48,7 @@ public abstract class BaseController extends HttpServlet {
         }
 
 
-        productService = new ProductService(productDataStore,productCategoryDataStore, supplierDataStore);
+        productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
         engine = null;
         context = null;
         cartService = new CartService(cartDataStore, productDataStore);
@@ -74,7 +74,7 @@ public abstract class BaseController extends HttpServlet {
         userDataStore = UserDaoMem.getInstance();
     }
 
-    private boolean doesCartSessionExist(HttpServletRequest req){
+    private boolean doesCartSessionExist(HttpServletRequest req) {
         HttpSession session = req.getSession();
         return session.getAttribute("user_id") != null;
     }
@@ -87,7 +87,7 @@ public abstract class BaseController extends HttpServlet {
 
     void setNewCart(HttpServletRequest req) {
         String sessionId = req.getSession().getId();
-        int newId = (int)req.getSession().getAttribute("user_id");
+        int newId = (int) req.getSession().getAttribute("user_id");
 //        req.getSession().setAttribute("user_id", newId);
         Cart cart = new Cart(sessionId);
         cart.setUserId(newId);
@@ -105,7 +105,7 @@ public abstract class BaseController extends HttpServlet {
     }
 
     protected void serviceSessionValidation(HttpServletRequest req) {
-        if (!doesCartSessionExist(req)){
+        if (!doesCartSessionExist(req)) {
             System.out.println("Session setting");
             createNewGuest(req);
             setNewCart(req);
@@ -118,11 +118,11 @@ public abstract class BaseController extends HttpServlet {
         context = new WebContext(req, resp, req.getServletContext());
     }
 
-    protected void setUserNameToContext(){
+    protected void setUserNameToContext() {
         context.setVariable("username", loggedUsername);
     }
 
-    protected void setLoggedUsername(int userId){
+    protected void setLoggedUsername(int userId) {
         loggedUsername = userDataStore.getById(userId).getName();
     }
 }

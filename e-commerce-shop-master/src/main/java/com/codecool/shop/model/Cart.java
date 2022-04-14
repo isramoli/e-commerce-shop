@@ -13,6 +13,7 @@ public class Cart extends BaseModel {
     public Cart(String name) {
         super(name);
     }
+
     public Cart(int userId) {
         super(String.valueOf(userId));
     }
@@ -22,9 +23,9 @@ public class Cart extends BaseModel {
     }
 
     public void addProduct(Product product, int quantity) {
-        boolean isProductInList = this.productsWithQuantityList.keySet().contains(product);
+        boolean isProductInList = this.productsWithQuantityList.containsKey(product);
 
-        if(isProductInList) {
+        if (isProductInList) {
             this.productsWithQuantityList.put(product, productsWithQuantityList.get(product) + quantity);
         } else {
             this.productsWithQuantityList.put(product, quantity);
@@ -34,7 +35,7 @@ public class Cart extends BaseModel {
 
     public int getTotalProductCount() {
         int total = 0;
-        for (int quantity: productsWithQuantityList.values()) {
+        for (int quantity : productsWithQuantityList.values()) {
             total += quantity;
         }
         return total;
